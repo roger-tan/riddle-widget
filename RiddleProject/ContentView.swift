@@ -32,6 +32,13 @@ struct ContentView: View {
                     .opacity(isAnswerHidden ? 0 : 1)
             }
         }
+        .onOpenURL(perform: { url in
+            let id = url.absoluteString.replacingOccurrences(of: "riddle://", with: "")
+            guard let riddle = Riddle.list.first(where: { $0.id == UInt(id) }) else {
+                return
+            }
+            self.updateRiddle(with: riddle)
+        })
     }
     
     func updateRiddle(with riddle: Riddle) {
