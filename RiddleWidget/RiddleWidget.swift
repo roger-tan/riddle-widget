@@ -12,12 +12,16 @@ import CommonLibrary
 struct Provider: TimelineProvider {
     public typealias Entry = SimpleEntry
 
-    public func snapshot(with context: Context, completion: @escaping (SimpleEntry) -> ()) {
+    public func placeholder(in context: Context) -> SimpleEntry {
+        SimpleEntry(date: Date(), riddle: Riddle.list.first!)
+    }
+  
+    public func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
         let entry = SimpleEntry(date: Date(), riddle: Riddle.random())
         completion(entry)
     }
 
-    public func timeline(with context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
+    public func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         var entries: [SimpleEntry] = []
 
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
